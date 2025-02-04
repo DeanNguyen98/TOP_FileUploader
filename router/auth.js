@@ -1,9 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const queries = require("../prisma/queries");
-
+const passport = require("passport");
 router.get("/login", (req, res) => {
     res.render("../views/Login");
+})
+
+router.post("/login",
+    passport.authenticate("local", {
+        failureRedirect: "/login",
+        successRedirect:"/user"
+    })
+    ,
+    (req, res) => {
+
 })
 
 router.get("/register", (req, res) => {
