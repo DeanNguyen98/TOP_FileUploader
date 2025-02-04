@@ -1,4 +1,5 @@
 const LocalStrategy = require("passport-local").Strategy;
+const { validPassword } = require("../lib/authentication");
 const queries = require("../prisma/queries");
 
 
@@ -12,7 +13,8 @@ module.exports = async (passport) => {
                 if (!user) {
                     return done(null, false, {message:"Incorrect username"});
                 }
-                if (user.password !== password) {
+                const isValid = validPassword(password, user.hash, user.salt)
+                if (!isValid) {
                     return done(null, false, {message: "Incorrect password"})
                 }
                 return done(null, user);
