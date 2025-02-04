@@ -3,12 +3,13 @@ const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 module.exports = {
-   registerUser: async (name,password) => {
+   registerUser: async (name,hash, salt) => {
         try {
             const user = await prisma.user.create({
                 data: {
                     username: name,
-                    password: password
+                    hash: hash,
+                    salt: salt
                 }
             })
             return user;
