@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const queries = require("../prisma/queries");
 const passport = require("passport");
-const validateUser = require("../lib/validator");
+const { validateUser } = require("../lib/validator");
 const {validationResult} = require("express-validator");
-const { validPassword, genPassword } = require("../lib/authentication");
+const { genPassword } = require("../lib/authentication");
 
 router.get("/login", (req, res) => {
     res.render("../views/Login");
