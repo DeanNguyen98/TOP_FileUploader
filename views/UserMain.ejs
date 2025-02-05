@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% if (locals.user) { %>
+        <p>Welcome back, <%= user.username %> </p>
+        <a href="/user/logout">Log Out</a>
+        <div class="file-upload">
+            <form action="/user/upload" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                  <input type="file" class="form-control-file" name="uploaded_file">
+                  <input type="submit" value="Upload File" class="btn btn-default">
+                </div>
+              </form>
+        </div>
+        <div class="folder-create-div">
+            <form action="/user/createFolder" method="POST">
+                <input type="text" id="folderName" name="folderName" placeholder="Enter folder name" required>
+                <button class="new-folder">Create Folder</button>
+            </form>
+        </div>
+        <div class="folder-ctn"></div>
+
+        <div class="file-ctn"></div>
+
+    <% } %>
+</body>
+<script>
+    document.querySelector(".New-folder").addEventListener("click", () => {
+
+    })
+</script>
+</html>
