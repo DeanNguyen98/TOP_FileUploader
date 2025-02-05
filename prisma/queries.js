@@ -34,5 +34,18 @@ module.exports = {
         }
     })
     return user;
+   },
+   createFolder: async(folderName) => {
+    try {
+        const folder = await prisma.folder.create({
+            data: {
+                name: folderName
+            }
+        });
+        return folder
+    } catch(err) {
+        console.error("Error creating folder", err)
+        throw err;
+    }
    }
 }
