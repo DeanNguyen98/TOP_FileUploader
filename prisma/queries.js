@@ -31,15 +31,21 @@ module.exports = {
     const user = await prisma.user.findUnique({
         where: {
             id: id
+        },
+        //include folder and files for deserializeUser()
+        include: {
+            folder: true,
+            files: true,
         }
     })
     return user;
    },
-   createFolder: async(folderName) => {
+   createFolder: async(folderName, userId) => {
     try {
         const folder = await prisma.folder.create({
             data: {
-                name: folderName
+                name: folderName,
+                ownerId: userId
             }
         });
         return folder
