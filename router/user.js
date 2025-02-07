@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const queries = require("../prisma/queries");
 const { Prisma } = require("@prisma/client");
-
+const folderRoute = require("./folder");
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './public/uploads');
@@ -24,7 +24,6 @@ function isAuthenticated(req, res, next) {
 router.get("/", isAuthenticated, async (req, res) => {
     // const user = await queries.findUser(req.user.username);
     // console.log(user);
-    console.log(req.user);
     res.render("UserMain", {
         user: req.user
     });
@@ -47,11 +46,12 @@ router.post("/createFolder", async (req, res) => {
     const { folderName } = req.body;
     try {
         const folder = await queries.createFolder(folderName, req.user.id);
-        console.log(folder);
-        return folder;
+        res.redirect("/user");
     } catch(err) {
         console.log("error creating folder", err);
     }
 })
+
+router.use("/folder", folderRoute)
 
 module.exports = router;
