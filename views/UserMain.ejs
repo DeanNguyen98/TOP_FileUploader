@@ -25,10 +25,12 @@
         </div>
         <div class="folder-ctn"></div>
             <% user.folder.forEach(item => { %>
-                <div class="folder">
-                    <i class="fa-solid fa-folder"></i>
-                    <span><%= item.name %> </span>
-                </div>
+                <a href="/user/folder/<%=item.id%>">
+                    <div class="folder">
+                        <i class="fa-solid fa-folder"></i>
+                        <span><%= item.name %> </span>
+                    </div>
+                </a>
             <% }); %>
         <div class="file-ctn"></div>
 
