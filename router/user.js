@@ -21,7 +21,10 @@ function isAuthenticated(req, res, next) {
     res.redirect("/auth/login");
 }
 
-router.get("/", isAuthenticated, (req, res) => {
+router.get("/", isAuthenticated, async (req, res) => {
+    // const user = await queries.findUser(req.user.username);
+    // console.log(user);
+    console.log(req.user);
     res.render("UserMain", {
         user: req.user
     });
@@ -43,12 +46,11 @@ router.post('/upload', upload.single('uploaded_file'), (req,res) => {
 router.post("/createFolder", async (req, res) => {
     const { folderName } = req.body;
     try {
-        const folder = await queries.createFolder(folderName);
-        const allFolder = await Prisma.folder.findMany();
-        console.log(allFolder);
-        return folder
+        const folder = await queries.createFolder(folderName, req.user.id);
+        console.log(folder);
+        return folder;
     } catch(err) {
-        console.log("error creating folder");
+        console.log("error creating folder", err);
     }
 })
 
