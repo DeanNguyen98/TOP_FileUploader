@@ -53,5 +53,21 @@ module.exports = {
         console.error("Error creating folder", err)
         throw err;
     }
+   },
+   findFolder: async(folderId) => {
+    try {
+        const folder = await prisma.folder.findUnique({
+            where: {
+                id: folderId
+            },
+            include: {
+                files: true
+            }
+        })
+        return folder;
+    } catch(err) {
+        console.error("error fetching folder", err);
+        throw err
+    }
    }
 }
