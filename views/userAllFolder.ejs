@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>All folders</h3>
+    <% if (locals.folders) { %>
+        <%folders.forEach(folder => { %>
+            <a href="/user/folder/<%=folder.id%>">
+                <div class="folder">
+                    <i class="fa-solid fa-folder"></i>
+                    <span><%= folder.name %> </span>
+                </div>
+            </a>
+        <% }) %>
+    <% } %>
+</body>
+<script src="https://kit.fontawesome.com/7eca06f1bf.js" crossorigin="anonymous"></script>
+</html>
+</html>
