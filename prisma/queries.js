@@ -67,7 +67,16 @@ module.exports = {
         return folder;
     } catch(err) {
         console.error("error fetching folder", err);
-        throw err
+        throw err;
+    }
+   },
+   findAllFolder: async() => {
+    try {
+        const folders = await prisma.folder.findMany();
+        return folders;
+    } catch(err) {
+        console.error("error retrieving folders", err)
+        throw err;
     }
    }
 }
