@@ -9,4 +9,10 @@ router.get("/:folderId",  async (req, res) => {
     })
 })
 
+router.get("/", async (req, res) => {
+    const folders = await queries.findAllFolder();
+    res.render("userAllFolder", {
+        folders: folders
+    })
+})
 module.exports = router;
