@@ -33,7 +33,14 @@
                 </a>
             <% }); %>
         <div class="file-ctn"></div>
-
+             <% user.files.forEach(item => { %>
+                <a href="/user/<%=item.id%>">
+                <div class="files">
+                    <i class="fa-solid fa-file"></i>
+                    <span><%= item.name %> </span>
+                </div>
+                </a>
+        <% }); %>
     <% } %>
 </body>
 <script src="https://kit.fontawesome.com/7eca06f1bf.js" crossorigin="anonymous"></script>
