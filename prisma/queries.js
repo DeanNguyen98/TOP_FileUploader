@@ -34,7 +34,7 @@ module.exports = {
         },
         //include folder and files for deserializeUser()
         include: {
-            folder: true,
+            folders: true,
             files: true,
         }
     })
@@ -77,6 +77,21 @@ module.exports = {
     } catch(err) {
         console.error("error retrieving folders", err)
         throw err;
+    }
+   },
+   uploadFile: async(name, url, userId, ownerId) => {
+    try {
+        const file = await prisma.file.create({
+            data: {
+                name: name,
+                url: url,
+                userId: userId,
+                folderId: folderId,
+
+            }
+        })
+    } catch(err) {
+
     }
    }
 }
