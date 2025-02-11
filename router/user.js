@@ -40,7 +40,7 @@ router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
                 const filePath = `${req.user.id}/${fileName}`;
                 const {data, error} = await supabase.storage
                 .from("Fileuploader")
-                .upload(fileName, req.file.buffer, {
+                .upload(filePath, req.file, {
                     contentType: req.file.mimetype
                 });
                 if (error) throw error;
@@ -48,7 +48,8 @@ router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
                 const supabaseResponse = supabase.storage
                 .from("Fileuploader")
                 .getPublicUrl(filePath);
-                const file = await queries.uploadFile(
+                
+                await queries.uploadFile(
                     fileName,
                     supabaseResponse.data.publicUrl,
                     req.user.id,
