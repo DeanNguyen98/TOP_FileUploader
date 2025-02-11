@@ -13,24 +13,24 @@ model User {
   hash     String
   salt     String
   files    File[]
-  folder   Folder[]
+  folders   Folder[]
 }
 
 model File {
   id         String   @id @default(uuid())
   name       String
   uploadedAt DateTime @default(now())
-  Content    String
+  url        String 
   ownerId    String
   owner      User     @relation(fields: [ownerId], references: [id])
-  folder     Folder[] @relation("FileToFolder")
+  folder     Folder? @relation(fields: [folderId], references: [id])
+  folderId   String? 
 }
-
 model Folder {
   id        String   @id @default(uuid())
   name      String   @unique
   createdAt DateTime @default(now())
-  files     File[]   @relation("FileToFolder")
+  files     File[]   
   owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   String
 }
