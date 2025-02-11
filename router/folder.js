@@ -9,6 +9,7 @@ router.get("/:folderId",  async (req, res) => {
     })
 })
 
+// Render all folder
 router.get("/", async (req, res) => {
     const folders = await queries.findAllFolder();
     res.render("userAllFolder", {
