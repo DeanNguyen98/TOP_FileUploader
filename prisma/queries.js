@@ -79,17 +79,18 @@ module.exports = {
         throw err;
     }
    },
-   uploadFile: async(name, url, userId, ownerId) => {
+   uploadFile: async(name, url, userId, folderId) => {
     try {
         const file = await prisma.file.create({
             data: {
                 name: name,
                 url: url,
-                userId: userId,
+                ownerId: userId,
                 folderId: folderId,
 
             }
         })
+        return file;
     } catch(err) {
 
     }
