@@ -12,7 +12,7 @@ router.get("/login", (req, res) => {
 
 router.post("/login",
     passport.authenticate("local", {
-        failureRedirect: "/login",
+        failureRedirect: "/auth/login",
         successRedirect:"/user"
     })
     ,
@@ -37,6 +37,7 @@ router.post("/register",validateUser, async (req, res) => {
     const user =  await queries.registerUser(req.body.username, hash, salt);
     console.log("user created", user)
     res.send("user created");
+    
 })
 
 module.exports = router
