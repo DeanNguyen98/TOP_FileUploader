@@ -4,15 +4,8 @@ const multer = require("multer");
 const queries = require("../prisma/queries");
 const { Prisma } = require("@prisma/client");
 const folderRoute = require("./folder");
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './public/uploads');
-    },
-    filename: function (req, file, cb) {
-        
-      cb(null, file.originalname + '-' + Date.now());
-    }
-  })
+const supabase = require("../prisma/supabase");
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage });
 
@@ -22,8 +15,6 @@ function isAuthenticated(req, res, next) {
 }
 
 router.get("/", isAuthenticated, async (req, res) => {
-    // const user = await queries.findUser(req.user.username);
-    // console.log(user);
     res.render("UserMain", {
         user: req.user
     });
@@ -38,10 +29,41 @@ router.get("/logout", isAuthenticated, (req, res) => {
     })
 })
 
-router.post('/upload', upload.single('uploaded_file'), (req,res) => {
-    console.log(req.file, req.body);
+//----------User upload file -------------//
+
+router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
+        try {
+            if (!req.file) {
+                return res.status(400).json({error: "No file uploaded"});
+            } else {
+                const fileName = `${req.file.originalname}`;
+                const filePath = `${req.user.id}/${fileName}`;
+                const {data, error} = await supabase.storage
+                .from("Fileuploader")
+                .upload(fileName, req.file.buffer, {
+                    contentType: req.file.mimetype
+                });
+                if (error) throw error;
+
+                const supabaseResponse = supabase.storage
+                .from("Fileuploader")
+                .getPublicUrl(filePath);
+                const file = await queries.uploadFile(
+                    fileName,
+                    supabaseResponse.data.publicUrl,
+                    req.user.id,
+                    null
+                )
+                res.redirect("/user");
+            }
+        } catch(err) {
+            console.error("Upload error:", err);
+        }
 })
 
+//------------------------------//
+
+//------------user create folder ------------//
 router.post("/createFolder", async (req, res) => {
     const { folderName } = req.body;
     try {
