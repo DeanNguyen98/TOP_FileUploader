@@ -23,21 +23,34 @@
                 <button class="new-folder">Create Folder</button>
             </form>
         </div>
+        <!-- render user folder -->
         <div class="folder-ctn"></div>
             <% user.folders.forEach(item => { %>
                 <a href="/user/folder/<%=item.id%>">
                     <div class="folder">
                         <i class="fa-solid fa-folder"></i>
                         <span><%= item.name %> </span>
+                        <form method="POST" action="/user/editFolder/<%item.id%>">
+                            <button type="submit">Edit</button>
+                        </form> 
+                        <form method="POST" action="/user/deleteFolder/<%item.id%>">
+                            <button type="submit">Delete</button>
+                        </form>
                     </div>
                 </a>
             <% }); %>
+
+        <!-- render user file -->
+
         <div class="file-ctn"></div>
              <% user.files.forEach(item => { %>
                 <a href="/user/<%=item.id%>">
                 <div class="files">
                     <i class="fa-solid fa-file"></i>
                     <span><%= item.name %> </span>
+                    <form method="POST" action="user/deleteFile/<%item.id%>">
+                        <button type="submit">Delete</button>
+                    </form>
                 </div>
                 </a>
         <% }); %>
