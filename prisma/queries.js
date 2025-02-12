@@ -3,6 +3,7 @@ const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 module.exports = {
+    //--------------USER QUERIES -----------//
    registerUser: async (name,hash, salt) => {
         try {
             const user = await prisma.user.create({
@@ -40,6 +41,8 @@ module.exports = {
     })
     return user;
    },
+
+   //-------------FOLDER QUERIES -------------//
    createFolder: async(folderName, userId) => {
     try {
         const folder = await prisma.folder.create({
@@ -79,6 +82,34 @@ module.exports = {
         throw err;
     }
    },
+   updateFolderName: async (newName, folderId) => {
+    try {
+        const updatedFolder = await prisma.folder.update({
+            where: {
+                id: folderId
+            },
+            data: {
+                name: newName,
+            }
+        })
+        return updatedFolder;
+    } catch(err) {
+        console.error("error updating folder", err);
+        throw err;
+    }
+   },
+   deleteFolder: async (folderId) => {
+    try {
+        await prisma.folder.delete({
+            where: {
+                id: folderId
+            }
+        })
+    } catch(err) {
+
+    }
+   }, 
+   //---------------FILE QUERIES -------//
    uploadFile: async(name, url, userId, folderId) => {
     try {
         const file = await prisma.file.create({
