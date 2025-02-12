@@ -77,10 +77,10 @@ router.post("/createFolder", async (req, res) => {
 
 //---------user edit/delete folder ----------//
 
-router.post("deleteFolder/:folderId", async(req, res) => {
+router.post("/deleteFolder/:folderId", async(req, res) => {
     const folderId = req.params.folderId;
-    console.log(folderId);
-    res.redirect("/")
+    await queries.deleteFolder(folderId);
+    res.redirect("/user")
 })
 
 
