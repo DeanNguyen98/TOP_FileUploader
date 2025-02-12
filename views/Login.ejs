@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-</head>
+<%-include('partials/header.ejs')%>
 <body>
   <% if (locals.user) {%>
     <h1>WELCOME BACK <%= user.username %></h1>

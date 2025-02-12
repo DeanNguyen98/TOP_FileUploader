@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<%-include('partials/header.ejs')%>
 <body>
     <% if (locals.user) { %>
         <p>Welcome back, <%= user.username %> </p>
@@ -26,18 +20,17 @@
         <!-- render user folder -->
         <div class="folder-ctn"></div>
             <% user.folders.forEach(item => { %>
-                <a href="/user/folder/<%=item.id%>">
-                    <div class="folder">
+                <div class="folder">
+                    <a href="/user/folder/<%=item.id%>">
                         <i class="fa-solid fa-folder"></i>
                         <span><%= item.name %> </span>
-                        <form method="POST" action="/user/editFolder/<%item.id%>">
-                            <button type="submit">Edit</button>
-                        </form> 
-                        <form method="POST" action="/user/deleteFolder/<%item.id%>">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </div>
-                </a>
+                    </a>
+                    <button type="submit" id="editDialog" onclick="openDialog()">Edit</button>
+                    <%-include("partials/editModal.ejs", {id: item.id})%>
+                    <form method="POST" action="/user/deleteFolder/<%=item.id%>">
+                    <button type="submit">Delete</button>
+                    </form>
+                </div>
             <% }); %>
 
         <!-- render user file -->
@@ -56,5 +49,13 @@
         <% }); %>
     <% } %>
 </body>
-<script src="https://kit.fontawesome.com/7eca06f1bf.js" crossorigin="anonymous"></script>
+<script>
+      function openDialog() {
+        document.getElementById("editDialog").showModal();
+    }
+
+    function closeDialog() {
+        document.getElementById("editDialog").close();
+    }
+</script>
 </html>
