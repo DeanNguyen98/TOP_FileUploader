@@ -28,11 +28,12 @@ model File {
 }
 model Folder {
   id        String   @id @default(uuid())
-  name      String   @unique
+  name      String   
   createdAt DateTime @default(now())
   files     File[]   
   owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   String
+  @@unique([name, ownerId])
 }
 
 model Session {
