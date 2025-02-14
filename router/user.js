@@ -83,6 +83,12 @@ router.post("/deleteFolder/:folderId", async(req, res) => {
     res.redirect("/user")
 })
 
+router.post("/editFolder/:folderId" , async(req, res) => {
+    const folderId = req.params.folderId;
+    await queries.updateFolderName(req.body.folderName, folderId);
+    res.redirect("/user");
+})
+
 
 router.use("/folder", folderRoute)
 
