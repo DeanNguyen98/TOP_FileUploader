@@ -35,7 +35,7 @@ module.exports = {
         },
         //include folder and files for deserializeUser()
         include: {
-            folders: true,
+            folders: {orderBy : {createdAt: "asc"}},
             files: true,
         }
     })
