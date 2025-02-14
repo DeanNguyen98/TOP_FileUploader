@@ -1,14 +1,18 @@
-<dialog style="
+<div style="
+display: none;
+justify-content: center;
+align-items: center;
 width: 100%;
 height: 100%;
 position: fixed;
 top: 0;
 left: 0;
 background: rgba(0, 0, 0, 0.4);
-" id="editDialog">
+" id="editDialog-<%=id %>">
     <form method="POST" action="/user/editFolder/<%=id%>">
         <input type="text" id="folderName" name="folderName">
-        <button type="submit" id="closeDialog" onclick="closeDialog()">Save</button>
+        <button type="submit">Save</button>
+        <button type="button" onclick="closeDialog('<%=id%>')">Cancel</button>
     </form>
  
-</dialog>
+</div>
