@@ -123,7 +123,30 @@ module.exports = {
         })
         return file;
     } catch(err) {
-
+        console.error(err)
+    }
+   },
+   deleteFile: async(fileId) => {
+    try {
+        await prisma.file.delete({
+            where: {
+                id: fileId
+            }
+        })
+    } catch(err) {
+        console.error(err)
+    }
+   },
+   findFile: async(fileId) => {
+    try {
+        const file = await prisma.file.findUnique({
+            where: {
+                id: fileId
+            }
+        })
+        return file
+    } catch(err) {
+        console.error('Error finding file:', err);
     }
    }
 }
