@@ -29,6 +29,7 @@ router.get("/logout", isAuthenticated, (req, res) => {
     })
 })
 
+//------------** FILE UPLOAD/DELETE **------------------//
 //----------User upload file -------------//
 
 router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
@@ -36,7 +37,8 @@ router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
             if (!req.file) {
                 return res.status(400).json({error: "No file uploaded"});
             } else {
-                const fileName = `${req.file.originalname}`;
+                const timeStamp = Date.now();
+                const fileName = `${timeStamp}_${req.file.originalname}`;
                 const filePath = `${req.user.id}/${fileName}`;
                 const {data, error} = await supabase.storage
                 .from("Fileuploader")
@@ -62,7 +64,26 @@ router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
         }
 })
 
+router.post('/deleteFile/:fileId', async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const file = await queries.findFile(req.params.fileId);
+        const filePath = `${userId}/${file.name}`;
+        const {error } = await supabase.storage
+        .from("Fileuploader")
+        .remove([filePath]);
+        if (error ) throw error;
+        await queries.deleteFile(req.params.fileId);
+        res.redirect("/user");
+    } catch(err) {
+
+    }
+})
+
 //------------------------------//
+
+//------------** FOLDER UPLOAD/DELETE **------------------//
+
 
 //------------user create folder ------------//
 router.post("/createFolder", async (req, res) => {
