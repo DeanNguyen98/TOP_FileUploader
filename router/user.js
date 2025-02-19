@@ -14,6 +14,8 @@ function isAuthenticated(req, res, next) {
     res.redirect("/auth/login");
 }
 
+router.use("/folder", folderRoute)
+
 router.get("/", isAuthenticated, async (req, res) => {
     res.render("UserMain", {
         user: req.user
@@ -110,7 +112,5 @@ router.post("/editFolder/:folderId" , async(req, res) => {
     res.redirect("/user");
 })
 
-
-router.use("/folder", folderRoute)
 
 module.exports = router;
