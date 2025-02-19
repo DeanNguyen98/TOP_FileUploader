@@ -2,6 +2,25 @@
 <body>
     <% if (locals.folder) { %>
         <p>This is folder: <%= folder.name%></p>
-    <% } %>
+        <p>Folder ID: <%=folder.id %></p>
+        <h1>Files:</h1>
+        <% folder.files.forEach(file => { %>
+            <a href="/user/folder/<%=folder.id%>/<%=file.id%>">
+                <div class="files">
+                    <i class="fa-solid fa-file"></i>
+                    <span><%= file.name %> </span>
+                    <form method="POST" action="/user/deleteFile/<%=file.id%>">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </a>
+        <%})%>
+    <form action="/user/folder/<%=folder.id%>/upload" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+          <input type="file" class="form-control-file" name="uploaded_file">
+          <input type="submit" value="Upload File" class="btn btn-default">
+        </div>
+      </form>
+      <% } %>
 </body>
 </html>
