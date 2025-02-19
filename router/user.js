@@ -78,7 +78,7 @@ router.post('/deleteFile/:fileId', async (req, res) => {
         await queries.deleteFile(req.params.fileId);
         res.redirect("/user");
     } catch(err) {
-
+        console.error("Error deleting file:", err);
     }
 })
 
