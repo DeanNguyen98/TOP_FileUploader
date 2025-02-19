@@ -9,7 +9,7 @@
                 <div class="files">
                     <i class="fa-solid fa-file"></i>
                     <span><%= file.name %> </span>
-                    <form method="POST" action="/user/deleteFile/<%=file.id%>">
+                    <form method="POST" action="/user/folder/<%=folder.id%>/deleteFile/<%=file.id%>">
                         <button type="submit">Delete</button>
                     </form>
                 </div>
