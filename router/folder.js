@@ -43,11 +43,26 @@ router.post("/:folderId/upload",upload.single('uploaded_file'), async(req, res) 
 
 //--------------DELETE FILE------------//
 
-router.
+router.post("/:folderId/deleteFile/:fileId", async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const file = await queries.findFile(req.params.fileId);
+        const filePath = `${userId}/${file.name}`;
+        const { error } = supabase.storage
+        .from("Fileuploader")
+        .remove([filePath]);
+        if (error) throw error;
+        await queries.deleteFile(req.params.fileId);
+        res.redirect(`/user/folder/${req.params.folderId}`)
+    } catch(err) {
+        console.error(err);
+    }
+  
+})
 
 //------------ Render all folder ---------------//
 router.get("/", async (req, res) => {
-    const folders = await queries.findAllFolder();
+    const folders = await queries.findAllFolder(req.user.id);
     res.render("userAllFolder", {
         folders: folders
     })
