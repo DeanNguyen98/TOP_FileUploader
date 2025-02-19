@@ -73,9 +73,13 @@ module.exports = {
         throw err;
     }
    },
-   findAllFolder: async() => {
+   findAllFolder: async(userId) => {
     try {
-        const folders = await prisma.folder.findMany();
+        const folders = await prisma.folder.findMany({
+            where: {
+                ownerId: userId
+            }
+        });
         return folders;
     } catch(err) {
         console.error("error retrieving folders", err)
