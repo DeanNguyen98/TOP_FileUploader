@@ -17,8 +17,68 @@
                 <button class="new-folder">Create Folder</button>
             </form>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>Folders:</tr>
+                <% user.folders.forEach(item => { %>
+                    <tr>
+                        <td>
+                            <a href="/user/folder/<%= item.id %>">
+                                <i class="fa-solid fa-folder"></i>
+                                <%= item.name %>
+                            </a>
+                        </td>
+                        <td>
+                            <%= new Date(item.createdAt).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year:"numeric"
+                            })
+                            %>
+                        </td>
+                        <td>
+                            <button type="button" class="editButton" data-id="<%= item.id %>">Edit</button>
+                            <%- include("partials/editModal.ejs", { id: item.id }) %>
+                            <form method="POST" action="/user/deleteFolder/<%= item.id %>" style="display:inline;">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+                <% user.files.forEach(item => { %>
+                    <tr>
+                    <td>
+                        <a href="/user/<%=item.id%>">
+                            <i class="fa-solid fa-file"></i>
+                            <span><%= item.name %> </span>
+                        </a>
+                    </td>
+                    <td>
+                        <%= new Date(item.uploadedAt).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "short",
+                            year:"numeric"
+                        })
+                        %>
+                    </td>
+                    <td>
+                        <form method="POST" action="/user/deleteFile/<%=item.id%>">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
         <!-- render user folder -->
-        <div class="folder-ctn"></div>
+        <!-- <div class="folder-ctn"></div>
             <% user.folders.forEach(item => { %>
                 <div class="folder">
                     <a href="/user/folder/<%=item.id%>">
@@ -31,11 +91,11 @@
                     <button type="submit">Delete</button>
                     </form>
                 </div>
-            <% }); %>
+            <% }); %> -->
 
         <!-- render user file -->
 
-        <div class="file-ctn"></div>
+        <!-- <div class="file-ctn"></div>
              <% user.files.forEach(item => { %>
                 <a href="/user/<%=item.id%>">
                 <div class="files">
@@ -46,7 +106,7 @@
                     </form>
                 </div>
                 </a>
-        <% }); %>
+        <% }); %> -->
     <% } %>
 </body>
 <script>
