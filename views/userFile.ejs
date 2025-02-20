@@ -1,0 +1,10 @@
+<%-include('partials/header.ejs')%>
+<body>
+    <% if (locals.file) { %>
+        <h2>File name: <%=file.name%></h2>
+        <p>Uploaded at: <%=file.uploadedAt %> </p>
+        <form method="POST" action="/user/<%=file.id%>/download">
+            <button type="submit">Download</button>
+        </form>
+    <% } %>
+</body>
