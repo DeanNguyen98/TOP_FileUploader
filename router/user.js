@@ -31,7 +31,24 @@ router.get("/logout", isAuthenticated, (req, res) => {
     })
 })
 
-//------------** FILE UPLOAD/DELETE **------------------//
+//------------** USER FILE**------------------//
+
+router.get('/:fileId', async(req, res) => {
+    const file = await queries.findFile(req.params.fileId);
+    res.render("userFile", {
+        file: file
+    })
+})
+
+router.post("/:fileId/download", async (req, res) => {
+  try {
+    const file = await queries.findFile(req.params.fileId);
+    if (!file) return res.status(400).json({error: "File not found"});
+    return res.redirect(file.url);
+  } catch (err) {
+    console.error("Download error:", err)
+  }
+})
 //----------User upload file -------------//
 
 router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
@@ -44,7 +61,7 @@ router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
                 const filePath = `${req.user.id}/${fileName}`;
                 const {data, error} = await supabase.storage
                 .from("Fileuploader")
-                .upload(filePath, req.file, {
+                .upload(filePath, req.file.buffer, {
                     contentType: req.file.mimetype
                 });
                 if (error) throw error;
