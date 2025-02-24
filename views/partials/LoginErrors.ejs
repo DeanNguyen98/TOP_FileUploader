@@ -1,0 +1,7 @@
+<% if(hasMessages) { %>
+    <ul class="mb-6 text-sm/4 text-red-400">
+      <% messages.forEach(message => { %>
+        <li>* <%= message %></li>
+      <% }); %>
+    </ul>
+  <% } %>
