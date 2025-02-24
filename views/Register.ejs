@@ -1,13 +1,41 @@
 <%-include('partials/header.ejs')%>
-<body>
-  <%- include("partials/errors.ejs") %>
-  <h1>Sign Up</h1>
-  <form action="/auth/register" method="POST">
-    <label for="username">Username</label>
-    <input id="username" name="username" placeholder="username" type="text" />
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" />
-    <button>Sign Up</button>
-  </form>
+<body class="h-full">
+  <div class="flex min-h-full flex-col justify-center">
+    <h1 class="text-5xl font-bold text-center text-gray-600">
+      <i class="fa-solid fa-folder"></i>
+      File Uploader
+    </h1>
+    <div class="mt-7 sm:mx-auto sm:w-full sm:max-w-sm">
+      <h2 class=" text-center text-2xl/9 font-bold  text-gray-900">Register new account</h2>
+    </div>
+    <div class="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
+      <%- include("partials/errors.ejs") %>
+      <form action="/auth/register" method="POST" class="space-y-4">
+        <div>
+          <label for="username" class="block text-sm/6 font-semibold text-gray-600">Username</label>
+        </div>
+        <div>
+          <input id="username" class="block w-full text-sm/5 px-3 py-2 rounded-md outline-1 outline-gray-400 -outline-offset-1 focus:outline-2 focus:outline-offset-2 focus:outline-blue-600" name="username" placeholder="username" required type="text" />
+        </div>
+        <div>
+          <label for="password" class="text-sm/6 block font-semibold text-gray-600">Password</label>
+        </div>
+        <div>
+          <input id="password" placeholder="password" name="password" type="password" class="w-full rounded-md outline-gray-400 block text-sm/5 px-3 py-2 outline-1 -outline-offset-1 focus:outline-2 focus:outline-offset-2 focus:outline-blue-600" required/>
+        </div>
+        <div>
+          <label for="confirmPassword" class="text-sm/6 block font-semibold text-gray-600">Confirm Password</label>
+        </div>
+        <div>
+          <input id="confirmPassword" name="passwordConfirm" type="password" placeholder="Re-enter password" class="block w-full px-3 py-2 outline-1 -outline-offset-1 outline-gray-400 rounded-md focus:outline-2 focus:outline-offset-2 focus:outline-blue-600 text-sm/5" required>
+        </div>
+        
+        <button type="submit" class="mt-7 w-full rounded-md bg-blue-500 sm:text-sm/5 px-3 py-1.5 text-white font-semibold hover:bg-blue-600 focus-visible:outline-2 focus-visible:-outline-offset-2 hover:cursor-pointer">Sign Up</button>
+      </form>
+      <div class="mt-6 text-center text-gray-500 text-sm/6">
+        <p>Already have an account? <a href="/auth/login" class="font-semibold hover:text-gray-900 cursor-pointer">Log In</a></p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
