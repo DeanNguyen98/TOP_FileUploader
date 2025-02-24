@@ -7,18 +7,18 @@ const {validationResult} = require("express-validator");
 const { genPassword } = require("../lib/authentication");
 
 router.get("/login", (req, res) => {
-    res.render("../views/Login");
+    res.render("/Login");
 })
 
 router.post("/login",
     passport.authenticate("local", {
         failureRedirect: "/auth/login",
-        successRedirect:"/user"
-    })
-    ,
+        failureMessage:true,
+    }),
     (req, res) => {
-
-})
+        res.redirect("/user");
+    }
+    )
 
 router.get("/register", (req, res) => {
     res.render("Register");
@@ -35,9 +35,9 @@ router.post("/register",validateUser, async (req, res) => {
     const salt = saltHash.salt;
     const hash = saltHash.hash
     const user =  await queries.registerUser(req.body.username, hash, salt);
-    console.log("user created", user)
-    res.send("user created");
+    res.render("misc/successReg");
     
 })
+
 
 module.exports = router
