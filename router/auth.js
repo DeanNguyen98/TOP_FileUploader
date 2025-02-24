@@ -7,17 +7,16 @@ const {validationResult} = require("express-validator");
 const { genPassword } = require("../lib/authentication");
 
 router.get("/login", (req, res) => {
-    res.render("/Login");
+    res.render("Login");
 })
 
 router.post("/login",
     passport.authenticate("local", {
+        successReturnToOrRedirect:"/user",
         failureRedirect: "/auth/login",
         failureMessage:true,
     }),
-    (req, res) => {
-        res.redirect("/user");
-    }
+
     )
 
 router.get("/register", (req, res) => {
