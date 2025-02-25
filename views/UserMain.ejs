@@ -1,99 +1,102 @@
 <%-include('partials/header.ejs')%>
-<body>
+<body class="h-full">
     <% if (locals.user) { %>
-        <p>Welcome back, <%= user.username %> </p>
-        <a href="/user/logout">Log Out</a>
-        <div class="file-upload">
-            <form action="/user/upload" enctype="multipart/form-data" method="post">
-                <div class="form-group">
-                  <input type="file" class="form-control-file" name="uploaded_file">
-                  <input type="submit" value="Upload File" class="btn btn-default">
+        <div class="flex flex-col sm:flex-row min-h-full">
+            <div class="px-3 py-6 bg-[#F8FAFD] sm:w-xs">
+                <p class="text-lg font-semibold text-gray-600">Welcome back, <%= user.username %> </p>
+                <div class="mt-3">
+                    <a href="/user/logout" class=" bg-blue-400 px-2 py-1.5 rounded-sm text-white text-md font-semibold">Log out</a>
                 </div>
-              </form>
-        </div>
-        <div class="folder-create-div">
-            <form action="/user/createFolder" method="POST">
-                <input type="text" id="folderName" name="folderName" placeholder="Enter folder name" required>
-                <button class="new-folder">Create Folder</button>
-            </form>
-        </div>
-        <h4>Folders:</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% user.folders.forEach(item => { %>
+                <div class="sm:mt-10">
+                    <button class="outline-2 bg-[#C2E7FF] outline-blue-300 w-4/5 py-1 px-1 rounded-2xl hover:bg-blue-100 text-sm/5 " id="new-file" onclick="OpenNewFileDialog()">New File</button>
+                <%- include ("dialog/newFile.ejs") %>  
+                </div>
+                <div class="sm:mt-4">
+                    <button class="outline-2 bg-[#C2E7FF] outline-blue-300 w-4/5 py-1 px-1 rounded-2xl hover:bg-blue-100 text-sm/5 " id="new-file" onclick="OpenNewFolderDialog()">New Folder</button>
+                <%- include ("dialog/newFolder.ejs") %>  
+                </div>
+            </div>
+            <div>
+                <h4>Folders:</h4>
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            <a href="/user/folder/<%= item.id %>">
-                                <i class="fa-solid fa-folder"></i>
-                                <%= item.name %>
-                            </a>
-                        </td>
-                        <td>
-                            <%= new Date(item.createdAt).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "short",
-                                year:"numeric"
-                            })
-                            %>
-                        </td>
-                        <td>
-                            <button type="button" class="editButton" data-id="<%= item.id %>">Edit</button>
-                            <%- include("partials/editModal.ejs", { id: item.id }) %>
-                            <form method="POST" action="/user/deleteFolder/<%= item.id %>" style="display:inline;">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
+                        <th>Name</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
-                <% }); %>
-            </tbody>
-                </table>
-<!--  -->
-        <h4>Files:</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% user.files.forEach(item => { %>
+                </thead>
+                <tbody>
+                    <% user.folders.forEach(item => { %>
+                        <tr>
+                            <td>
+                                <a href="/user/folder/<%= item.id %>">
+                                    <i class="fa-solid fa-folder"></i>
+                                    <%= item.name %>
+                                </a>
+                            </td>
+                            <td>
+                                <%= new Date(item.createdAt).toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year:"numeric"
+                                })
+                                %>
+                            </td>
+                            <td>
+                                <button type="button" class="editButton" data-id="<%= item.id %>">Edit</button>
+                                <%- include("dialog/editModal.ejs", { id: item.id }) %>
+                                <form method="POST" action="/user/deleteFolder/<%= item.id %>" style="display:inline;">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+                    </table>
+    <!--  -->
+            <h4>Files:</h4>
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            <a href="/user/<%=item.id%>">
-                                <i class="fa-solid fa-file"></i>
-                                <span><%= item.name %> </span>
-                            </a>
-                        </td>
-                        <td>
-                            <%= new Date(item.uploadedAt).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "short",
-                                year:"numeric"
-                            })
-                            %>
-                        </td>
-                        <td>
-                            <form method="POST" action="/user/deleteFile/<%=item.id%>">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
+                        <th>Name</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
-                <% }); %>
-            </tbody>
-                </table>
+                </thead>
+                <tbody>
+                    <% user.files.forEach(item => { %>
+                        <tr>
+                            <td>
+                                <a href="/user/<%=item.id%>">
+                                    <i class="fa-solid fa-file"></i>
+                                    <span><%= item.name %> </span>
+                                </a>
+                            </td>
+                            <td>
+                                <%= new Date(item.uploadedAt).toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year:"numeric"
+                                })
+                                %>
+                            </td>
+                            <td>
+                                <form method="POST" action="/user/deleteFile/<%=item.id%>">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+                    </table>
+        </div>
+            </div>
 <!-- ----------------------------------------- -->
     <% } %>
 </body>
 <script>
+    // Edit Folder name Dialog
       function openDialog(id) {
         const dialog = document.getElementById(`editDialog-${id}`);
         if (dialog) {
@@ -111,6 +114,32 @@
             console.error("error finding dialog");
         }
     }
+
+    // Upload new File Dialog //
+
+    function OpenNewFileDialog() {
+        const fileDialog = document.getElementById("New-file-dialog");
+        fileDialog.style.display = "flex";
+    }
+
+    function closeNewFileDialog() {
+        const fileDialog = document.getElementById("New-file-dialog");
+        fileDialog.style.display = "none";
+    }
+
+    //Create new Folder dialog
+    function OpenNewFolderDialog() {
+        const fileDialog = document.getElementById("New-folder-dialog");
+        fileDialog.style.display = "flex";
+    }
+
+    function closeNewFolderDialog() {
+        const fileDialog = document.getElementById("New-folder-dialog");
+        fileDialog.style.display = "none";
+    }
+
+
+    //
     document.addEventListener("DOMContentLoaded", () => {
         const editButtons = document.querySelectorAll(".editButton");
         editButtons.forEach(button => {
