@@ -614,6 +614,9 @@
   .w-4\/5 {
     width: calc(4/5 * 100%);
   }
+  .w-90 {
+    width: calc(var(--spacing) * 90);
+  }
   .w-\[10\%\] {
     width: 10%;
   }
@@ -654,6 +657,11 @@
   .border-spacing-4 {
     --tw-border-spacing-x: calc(var(--spacing) * 4);
     --tw-border-spacing-y: calc(var(--spacing) * 4);
+    border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
+  }
+  .border-spacing-5 {
+    --tw-border-spacing-x: calc(var(--spacing) * 5);
+    --tw-border-spacing-y: calc(var(--spacing) * 5);
     border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
   }
   .transform {
@@ -740,6 +748,9 @@
   .bg-blue-100 {
     background-color: var(--color-blue-100);
   }
+  .bg-blue-200 {
+    background-color: var(--color-blue-200);
+  }
   .bg-blue-300 {
     background-color: var(--color-blue-300);
   }
@@ -790,6 +801,9 @@
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
   }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
@@ -903,6 +917,9 @@
   .outline-blue-300 {
     outline-color: var(--color-blue-300);
   }
+  .outline-blue-400 {
+    outline-color: var(--color-blue-400);
+  }
   .outline-gray-400 {
     outline-color: var(--color-gray-400);
   }
@@ -994,6 +1011,42 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-gray-900);
+      }
+    }
+  }
+  .hover\:outline-2 {
+    &:hover {
+      @media (hover: hover) {
+        outline-style: var(--tw-outline-style);
+        outline-width: 2px;
+      }
+    }
+  }
+  .hover\:-outline-offset-2 {
+    &:hover {
+      @media (hover: hover) {
+        outline-offset: calc(2px * -1);
+      }
+    }
+  }
+  .hover\:outline-blue-300 {
+    &:hover {
+      @media (hover: hover) {
+        outline-color: var(--color-blue-300);
+      }
+    }
+  }
+  .hover\:outline-blue-500 {
+    &:hover {
+      @media (hover: hover) {
+        outline-color: var(--color-blue-500);
+      }
+    }
+  }
+  .hover\:outline-blue-600 {
+    &:hover {
+      @media (hover: hover) {
+        outline-color: var(--color-blue-600);
       }
     }
   }
@@ -1097,6 +1150,16 @@
       display: grid;
     }
   }
+  .sm\:w-2xs {
+    @media (width >= 40rem) {
+      width: var(--container-2xs);
+    }
+  }
+  .sm\:w-3xs {
+    @media (width >= 40rem) {
+      width: var(--container-3xs);
+    }
+  }
   .sm\:w-full {
     @media (width >= 40rem) {
       width: 100%;
@@ -1120,6 +1183,11 @@
   .sm\:flex-row {
     @media (width >= 40rem) {
       flex-direction: row;
+    }
+  }
+  .sm\:items-center {
+    @media (width >= 40rem) {
+      align-items: center;
     }
   }
   .sm\:text-sm\/5 {

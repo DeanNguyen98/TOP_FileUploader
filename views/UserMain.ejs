@@ -9,13 +9,17 @@
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row h-full flex-1">
-                <div class="px-3 py-6 bg-[#F8FAFD] sm:w-xs">
+                <div class="px-3 py-6 bg-[#F8FAFD] sm:w-3xs">
                     <div class="sm:mt-10">
-                        <button class="outline-2 bg-[#C2E7FF] outline-blue-300 w-4/5 py-1 px-1 rounded-2xl hover:bg-blue-100 text-sm/5 " id="new-file" onclick="OpenNewFileDialog()">New File</button>
+                        <button class=" bg-[#C2E7FF]  w-full py-3 px-1 rounded-2xl hover:bg-blue-100 text-sm/5 " id="new-file" onclick="OpenNewFileDialog()">
+                            <i class="fa-solid fa-file-export"></i>
+                            New File</button>
                     <%- include ("dialog/newFile.ejs") %>  
                     </div>
                     <div class="sm:mt-4">
-                        <button class="outline-2 bg-[#C2E7FF] outline-blue-300 w-4/5 py-1 px-1 rounded-2xl hover:bg-blue-100 text-sm/5 " id="new-file" onclick="OpenNewFolderDialog()">New Folder</button>
+                        <button class="bg-[#C2E7FF] w-full py-3 px-1 rounded-2xl hover:bg-blue-100 text-sm/5 " id="new-file" onclick="OpenNewFolderDialog()">
+                            <i class="fa-solid fa-folder-plus"></i>
+                            New Folder</button>
                     <%- include ("dialog/newFolder.ejs") %>  
                     </div>
                 </div>
@@ -23,7 +27,7 @@
                     <div>
                         <h2 class="text-2xl font-bold text-gray-600 ">Folders</h2>
                     </div>
-                <table class="w-full table-fixed border-separate border-spacing-2">
+                <table class="w-full table-fixed border-separate border-spacing-3">
                     <thead class="w-full">
                         <tr>
                             <th class="w-3/5 text-left p-2">Name</th>
@@ -33,8 +37,8 @@
                     </thead>
                     <tbody>
                         <% user.folders.forEach(item => { %>
-                            <tr class="outline-1 mt-2 mb-2">
-                                <td>
+                            <tr class="outline-2 rounded-md outline-blue-400 mt-2 mb-2 hover:outline-2 hover:-outline-offset-2 hover:outline-blue-500 text-sm/6 font-semibold text-gray-600">
+                                <td class="px-2 py-2">
                                     <a href="/user/folder/<%= item.id %>">
                                         <i class="fa-solid fa-folder"></i>
                                         <%= item.name %>
@@ -62,9 +66,9 @@
                 <div class="mt-5">
                     <h2 class="text-2xl font-bold text-gray-600 ">Files</h2>
                 </div>
-                <table class="w-full table-fixed">
+                <table class="w-full table-fixed border-separate border-spacing-3">
                     <thead  class="w-full">
-                        <tr>
+                        <tr >
                             <th class="w-3/5 text-left p-2">Name</th>
                             <th class="w-1/5 text-left p-2">Created At</th>
                             <th class="w-1/5 text-left p-2">Actions</th>
@@ -72,8 +76,8 @@
                     </thead>
                     <tbody>
                         <% user.files.forEach(item => { %>
-                            <tr>
-                                <td>
+                            <tr class="outline-2 rounded-md outline-blue-400 mt-2 mb-2 hover:outline-2 hover:-outline-offset-2 hover:outline-blue-500 text-sm/6 font-semibold text-gray-600">
+                                <td class="px-2 py-2">
                                     <a href="/user/<%=item.id%>">
                                         <i class="fa-solid fa-file"></i>
                                         <span><%= item.name %> </span>
