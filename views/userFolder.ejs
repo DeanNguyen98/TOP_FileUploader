@@ -27,7 +27,7 @@
                             <div>Actions</div>
                         </div>
                         <% folder.files.forEach(file => { %>
-                            <div class="py-3 grid grid-cols-[3fr_1fr_1fr] text-md/6 font-semibold text-gray-600">
+                            <div class="mt-3 grid grid-cols-[3fr_1fr_1fr] text-md/6 font-semibold text-gray-600 outline-1">
                                 <a href="/user/folder/<%=folder.id%>/<%=file.id%>">
                                     <div class="files">
                                         <i class="fa-solid fa-file"></i>
@@ -40,10 +40,26 @@
                                     year:"numeric"
                                 })
                                 %></div>
-                                <div>
-                                    <form method="POST" action="/user/folder/<%=folder.id%>/deleteFile/<%=file.id%>">
-                                            <button type="submit">Delete</button>
-                                        </form>    
+                                <div class="relative inline-block text-left">
+                                    <div>
+                                        <button type="button" class="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                          Options
+                                          <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                          </svg>
+                                        </button>
+                                      </div>
+                                      <div class="absolute hidden left-0 z-10 mt-2 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden overflow:hidden " role="menu" id="menu-content" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                        <div class="py-1" role="none">
+                                          <form method="POST" action="/user/folder/<%=folder.id%>/deleteFile/<%=file.id%>">
+                                            <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Delete</button>
+                                          </form>
+                                          <form method="GET" action="/user/folder/<%=folder.id%>/download/<%=file.id%>">
+                                            <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" >Download</button>
+                                        </form>
+                                        </div>
+                                      </div>
+                                   
                                 </div>
                             </div>
                         <%})%>
@@ -63,5 +79,18 @@
         const fileDialog = document.getElementById("New-subfile-dialog");
         fileDialog.style.display = "none";
     }
+    document.addEventListener("DOMContentLoaded", function () {
+    const button = document.getElementById("menu-button");
+    const menu = document.getElementById("menu-content");
+
+    button.addEventListener("click", function () {
+    menu.classList.toggle("hidden"); 
+  }); 
+  document.addEventListener("click", function (event) {
+    if (!button.contains(event.target) && !menu.contains(event.target)) {
+      menu.classList.add("hidden");
+    }
+  });
+});
 </script>
 </html>
