@@ -1,26 +1,67 @@
 <%-include('partials/header.ejs')%>
-<body>
+<body class="h-full">
     <% if (locals.folder) { %>
-        <p>This is folder: <%= folder.name%></p>
-        <p>Folder ID: <%=folder.id %></p>
-        <h1>Files:</h1>
-        <% folder.files.forEach(file => { %>
-            <a href="/user/folder/<%=folder.id%>/<%=file.id%>">
-                <div class="files">
-                    <i class="fa-solid fa-file"></i>
-                    <span><%= file.name %> </span>
-                    <form method="POST" action="/user/folder/<%=folder.id%>/deleteFile/<%=file.id%>">
-                        <button type="submit">Delete</button>
-                    </form>
+        <div class="flex flex-col min-h-full">
+            <div class="px-3 py-4 flex justify-between items-center bg-[#F8FAFD] border-b-1 border-gray-100">
+                <p class="text-lg font-semibold text-gray-600">Welcome back, <%= user.username %> </p>
+                <div>
+                    <a href="/user/logout" class=" bg-blue-400 px-2 py-1.5 rounded-sm text-white text-md font-semibold">Log out</a>
                 </div>
-            </a>
-        <%})%>
-    <form action="/user/folder/<%=folder.id%>/upload" enctype="multipart/form-data" method="post">
-        <div class="form-group">
-          <input type="file" class="form-control-file" name="uploaded_file">
-          <input type="submit" value="Upload File" class="btn btn-default">
+            </div>
+            <div class="flex flex-col sm:flex-row h-full flex-1">
+                <div class="px-3 py-6 bg-[#F8FAFD] sm:w-3xs">
+                    <div class="sm:mt-10">
+                        <button class=" bg-[#C2E7FF]  w-full py-3 px-1 rounded-2xl hover:bg-blue-100 text-sm/5 " id="new-file" onclick="OpenNewFileDialog()">
+                            <i class="fa-solid fa-file-export"></i>
+                            New File</button>
+                    <%- include ("dialog/newSubFile.ejs") %>  
+                    </div>
+                </div>
+                <div class="p-4 w-full">
+                    <h1 class="font-bold text-gray-800 text-3xl/6"><%= folder.name%></h1>
+                    <div class="mt-10">
+                        <h1 class="text-2xl font-bold text-gray-600 ">Files</h1>
+                        <div class="mt-5 grid grid-cols-[3fr_1fr_1fr] text-sm/6 font-semibold">
+                            <div>Name</div>
+                            <div>Created At</div>
+                            <div>Actions</div>
+                        </div>
+                        <% folder.files.forEach(file => { %>
+                            <div class="py-3 grid grid-cols-[3fr_1fr_1fr] text-md/6 font-semibold text-gray-600">
+                                <a href="/user/folder/<%=folder.id%>/<%=file.id%>">
+                                    <div class="files">
+                                        <i class="fa-solid fa-file"></i>
+                                        <span><%= file.name %> </span>
+                                    </div>
+                                </a>
+                                <div> <%= new Date(file.uploadedAt).toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year:"numeric"
+                                })
+                                %></div>
+                                <div>
+                                    <form method="POST" action="/user/folder/<%=folder.id%>/deleteFile/<%=file.id%>">
+                                            <button type="submit">Delete</button>
+                                        </form>    
+                                </div>
+                            </div>
+                        <%})%>
+                    </div>
+                </div>
+            </div>
         </div>
-      </form>
       <% } %>
 </body>
+<script>
+      function OpenNewFileDialog() {
+        const fileDialog = document.getElementById("New-subfile-dialog");
+        fileDialog.style.display = "flex";
+    }
+
+    function closeNewFileDialog() {
+        const fileDialog = document.getElementById("New-subfile-dialog");
+        fileDialog.style.display = "none";
+    }
+</script>
 </html>
