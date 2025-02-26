@@ -61,6 +61,18 @@ router.post("/:folderId/deleteFile/:fileId", async (req, res) => {
   
 })
 
+//-------------DOWNLOAD FILE-----------//
+
+router.get("/:folderId/download/:fileId", async (req, res) => {
+    try {
+      const file = await queries.findFile(req.params.fileId);
+      if (!file) return res.status(400).json({error: "File not found"});
+      return res.redirect(file.url);
+    } catch (err) {
+      console.error("Download error:", err)
+    }
+  })
+
 //------------ Render all folder ---------------//
 router.get("/", async (req, res) => {
     const folders = await queries.findAllFolder(req.user.id);
