@@ -2,8 +2,8 @@
 <body class="h-full">
     <% if (locals.user) { %>
         <div class="flex flex-col min-h-full">
-            <div class="px-3 py-2 flex justify-between items-center bg-[#F8FAFD] border-b-1 border-gray-100">
-                <p class="text-lg font-semibold text-gray-600">Welcome back, <%= user.username %> </p>
+            <div class="px-3 py-4 flex justify-between items-center bg-[#F8FAFD] border-b-1 border-gray-100">
+                <p class="text-lg font-semibold text-gray-600">Welcome back, <%= locals.user.username %> </p>
                 <div>
                     <a href="/user/logout" class=" bg-blue-400 px-2 py-1.5 rounded-sm text-white text-md font-semibold">Log out</a>
                 </div>
@@ -37,8 +37,8 @@
                     </thead>
                     <tbody>
                         <% user.folders.forEach(item => { %>
-                            <tr class="outline-2 rounded-md outline-blue-400 mt-2 mb-2 hover:outline-2 hover:-outline-offset-2 hover:outline-blue-500 text-sm/6 font-semibold text-gray-600">
-                                <td class="px-2 py-2">
+                            <tr class="font-semibold text-gray-600 hover:text-gray-800">
+                                <td class="text-md/6 px-1 py-1">
                                     <a href="/user/folder/<%= item.id %>">
                                         <i class="fa-solid fa-folder"></i>
                                         <%= item.name %>
@@ -76,8 +76,8 @@
                     </thead>
                     <tbody>
                         <% user.files.forEach(item => { %>
-                            <tr class="outline-2 rounded-md outline-blue-400 mt-2 mb-2 hover:outline-2 hover:-outline-offset-2 hover:outline-blue-500 text-sm/6 font-semibold text-gray-600">
-                                <td class="px-2 py-2">
+                            <tr class="font-semibold text-gray-600">
+                                <td class="text-md/6 px-1 py-1">
                                     <a href="/user/<%=item.id%>">
                                         <i class="fa-solid fa-file"></i>
                                         <span><%= item.name %> </span>
