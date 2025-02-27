@@ -1,6 +1,7 @@
 {
   "scripts": {
-  "dev": "nodemon --ext js,ejs app.js"
+  "dev": "nodemon --ext js,ejs app.js",
+  "start": "node app.js"
   },
   "dependencies": {
     "@prisma/client": "^6.3.0",
