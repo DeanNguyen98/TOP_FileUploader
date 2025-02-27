@@ -9,11 +9,17 @@ top: 0;
 left: 0;
 background: rgba(0, 0, 0, 0.4);
 " id="editDialog-<%=id %>">
-    <h2>Rename folder</h2>
-    <form method="POST" action="/user/editFolder/<%=id%>">
-        <input type="text" id="folderName" name="folderName" placeholder="Enter new name">
-        <button type="submit">Save</button>
-        <button type="button" onclick="closeDialog('<%=id%>')">Cancel</button>
+ <div class="flex flex-col sm:w-sm px-3 py-6 bg-white rounded-xl">
+    <h2 class="text-center text-md/6 mb-4 text-gray-600 font-semibold">Rename folder</h2>
+    <form action="/user/editFolder/<%=id%>" method="POST">
+        <div class="flex justify-center">
+            <input type="text" id="folderName" name="folderName" placeholder="Enter new name" class="px-2 py-1.5 outline-1 -outline-offset-1 outline-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-400 text-sm/5 rounded-md" required>
+            <button type="submit" class="ml-1 text-sm text-grey-400 bg-blue-400 cursor-pointer px-2 py-1 rounded-xs text-white" >Save</button>
+        </div>
+        <div class="mt-2 sm:w-full flex justify-center">
+            <button type="button" class="text-sm text-grey-400 bg-blue-400 cursor-pointer px-2 py-1 rounded-xs text-white" onclick="closeDialog('<%=id%>')">Cancel</button>
+        </div>
     </form>
- 
+  </div>
+
 </div>
