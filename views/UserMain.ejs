@@ -28,7 +28,6 @@
                         <h2 class="text-2xl font-bold text-gray-600 ">Folders</h2>
                     </div>
                     <div class="mt-10">
-                        <h1 class="text-2xl font-bold text-gray-600 ">Files</h1>
                         <div class="mt-5 grid grid-cols-[3fr_1fr_1fr] text-sm/6 font-semibold">
                             <div>Name</div>
                             <div>Created At</div>
@@ -53,7 +52,7 @@
                                     <div class="relative inline-block text-left">
                                         <div>
                                             <button type="button" data-id="<%=item.id%>" class="menu-button inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
-                                              Options
+                                              ...
                                               <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                                                 <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                                               </svg>
@@ -71,48 +70,54 @@
                                    </div>
                                 </div>
                         <% }); %>
-                </table>
+                    </div>
+               
                 <div class="mt-5">
-                    <h2 class="text-2xl font-bold text-gray-600 ">Files</h2>
+                    <h2 class="text-2xl font-bold text-gray-600">Files</h2>
+                <div class="mt-5 grid grid-cols-[3fr_1fr_1fr] text-sm/6 font-semibold">
+                    <div>Name</div>
+                    <div>Created At</div>
+                    <div>Actions</div>
                 </div>
-                <table class="w-full table-fixed border-separate border-spacing-3">
-                    <thead  class="w-full">
-                        <tr >
-                            <th class="w-3/5 text-left p-2">Name</th>
-                            <th class="w-1/5 text-left p-2">Created At</th>
-                            <th class="w-1/5 text-left p-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
                         <% user.files.forEach(item => { %>
-                            <tr class="font-semibold text-gray-600">
-                                <td class="text-md/6 px-1 py-1">
-                                    <a href="/user/<%=item.id%>">
+                            <div class="mt-3 grid grid-cols-[3fr_1fr_1fr] text-md/6 font-semibold text-gray-600">
+                                <a href="/user/<%=item.id%>">
+                                    <div>
                                         <i class="fa-solid fa-file"></i>
                                         <span><%= item.name %> </span>
+                                    </div>
                                     </a>
-                                </td>
-                                <td>
-                                    <%= new Date(item.uploadedAt).toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year:"numeric"
-                                    })
-                                    %>
-                                </td>
-                                <td>
-                                    <form method="POST" action="/user/deleteFile/<%=item.id%>">
-                                        <button type="submit">Delete</button>
+                            <div> <%= new Date(item.uploadedAt).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year:"numeric"
+                            })
+                            %></div>
+                            <div class="relative inline-block text-left">
+                                <div>
+                                    <button type="button" data-id="<%=item.id%>" class="menu-button inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
+                                      ...
+                                      <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                  <div class="absolute hidden left-0 z-10 mt-2 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden overflow:hidden " role="menu" id="menu-content-<%=item.id%>" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                    <div class="py-1" role="none">
+                                      <form method="POST" action="/user/deleteFile/<%=item.id%>">
+                                        <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Delete</button>
+                                      </form>
+                                      <form method="GET" action="/user/download/<%=item.id%>">
+                                        <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" >Download</button>
                                     </form>
-                                </td>
-                            </tr>
+                                    </div>
+                                  </div>
+                            </div>
+                            </div>
                         <% }); %>
-                    </tbody>
-                    </table>
-            </div>
-                </div>
         </div>
-<!-- ----------------------------------------- -->
+    </div>
+    </div>
     <% } %>
 </body>
 <script>
@@ -158,7 +163,11 @@
         fileDialog.style.display = "none";
     }
 
-
+    //Open Action Menu//
+    function openActionMenu(id) {
+      const actionMenu = document.getElementById(`menu-content-${id}`);
+      actionMenu.classList.toggle("hidden");
+    }
     //
     document.addEventListener("DOMContentLoaded", () => {
         const editButtons = document.querySelectorAll(".editButton");
@@ -166,8 +175,22 @@
             const id = button.getAttribute('data-id');
             button.addEventListener("click", () => {
                 openDialog(id);
+            });
+        });
+        //ACTION MENU
+        const Menubuttons = document.querySelectorAll(".menu-button");
+        Menubuttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const menu = document.getElementById(`menu-content-${button.dataset.id}`);
+            menu.classList.toggle("hidden");
+            document.addEventListener("click", (e) => {
+            if (!button.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add("hidden");
+            }
             })
+        });
         })
-    } )
+        //
+    })
 </script>
 </html>
