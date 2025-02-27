@@ -23,45 +23,54 @@
                     <%- include ("dialog/newFolder.ejs") %>  
                     </div>
                 </div>
-                <div class="flex-1 p-4">
+                <div class="flex-1 p-4 w-full">
                     <div>
                         <h2 class="text-2xl font-bold text-gray-600 ">Folders</h2>
                     </div>
-                <table class="w-full table-fixed border-separate border-spacing-3">
-                    <thead class="w-full">
-                        <tr>
-                            <th class="w-3/5 text-left p-2">Name</th>
-                            <th class="w-1/5 text-left p-2">Created At</th>
-                            <th class="w-1/5 text-left p-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <div class="mt-10">
+                        <h1 class="text-2xl font-bold text-gray-600 ">Files</h1>
+                        <div class="mt-5 grid grid-cols-[3fr_1fr_1fr] text-sm/6 font-semibold">
+                            <div>Name</div>
+                            <div>Created At</div>
+                            <div>Actions</div>
+                    </div>
                         <% user.folders.forEach(item => { %>
-                            <tr class="font-semibold text-gray-600 hover:text-gray-800">
-                                <td class="text-md/6 px-1 py-1">
+                            <div class="mt-3 grid grid-cols-[3fr_1fr_1fr] text-md/6 font-semibold text-gray-600">
                                     <a href="/user/folder/<%= item.id %>">
-                                        <i class="fa-solid fa-folder"></i>
-                                        <%= item.name %>
+                                        <div>
+                                            <i class="fa-solid fa-folder"></i>
+                                            <%= item.name %>
+                                        </div>
+                                        
                                     </a>
-                                </td>
-                                <td>
-                                    <%= new Date(item.createdAt).toLocaleDateString("en-GB", {
+                                    <div> <%= new Date(item.createdAt).toLocaleDateString("en-GB", {
                                         day: "2-digit",
                                         month: "short",
                                         year:"numeric"
                                     })
                                     %>
-                                </td>
-                                <td>
-                                    <button type="button" class="editButton" data-id="<%= item.id %>">Edit</button>
-                                    <%- include("dialog/editModal.ejs", { id: item.id }) %>
-                                    <form method="POST" action="/user/deleteFolder/<%= item.id %>" style="display:inline;">
-                                        <button type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                    </div>
+                                    <div class="relative inline-block text-left">
+                                        <div>
+                                            <button type="button" data-id="<%=item.id%>" class="menu-button inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
+                                              Options
+                                              <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                              </svg>
+                                            </button>
+                                          </div>
+                                    <div class="absolute hidden left-0 z-10 mt-2 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden overflow:hidden " role="menu" id="menu-content-<%=item.id%>" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                        <div class="py-1" role="none">
+                                            <button type="button" class="editButton w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3" data-id="<%= item.id %>">Edit</button>
+                                            <%- include("dialog/editModal.ejs", { id: item.id }) %>
+                                            <form method="POST" action="/user/deleteFolder/<%= item.id %>" style="display:inline;">
+                                                <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1">Delete</button>
+                                            </form>
+                                        </div>
+                                      </div>
+                                   </div>
+                                </div>
                         <% }); %>
-                    </tbody>
                 </table>
                 <div class="mt-5">
                     <h2 class="text-2xl font-bold text-gray-600 ">Files</h2>
