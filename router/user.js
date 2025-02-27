@@ -37,7 +37,7 @@ router.get("/download/:fileId", async (req, res) => {
     try {
       const file = await queries.findFile(req.params.fileId);
       if (!file) return res.status(400).json({error: "File not found"});
-      return res.sendFile(file.url);
+      return res.redirect(file.url);
     } catch (err) {
       console.error("Download error:", err)
     }
