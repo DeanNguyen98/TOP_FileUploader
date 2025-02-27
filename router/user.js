@@ -33,6 +33,16 @@ router.get("/logout", isAuthenticated, (req, res) => {
 
 //------------** USER FILE**------------------//
 
+router.get("/download/:fileId", async (req, res) => {
+    try {
+      const file = await queries.findFile(req.params.fileId);
+      if (!file) return res.status(400).json({error: "File not found"});
+      return res.sendFile(file.url);
+    } catch (err) {
+      console.error("Download error:", err)
+    }
+  })
+  
 router.get('/:fileId', async(req, res) => {
     const file = await queries.findFile(req.params.fileId);
     res.render("userFile", {
@@ -40,15 +50,7 @@ router.get('/:fileId', async(req, res) => {
     })
 })
 
-router.post("/:fileId/download", async (req, res) => {
-  try {
-    const file = await queries.findFile(req.params.fileId);
-    if (!file) return res.status(400).json({error: "File not found"});
-    return res.redirect(file.url);
-  } catch (err) {
-    console.error("Download error:", err)
-  }
-})
+
 //----------User upload file -------------//
 
 router.post('/upload', upload.single('uploaded_file'), async (req,res) => {
