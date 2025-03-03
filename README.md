@@ -13,8 +13,8 @@ A file management system that allows users to upload, organize, and download fil
 
 # Features
 
-✅ User authentication with Passport.js
-✅ Upload files with Multer & Supabase Storage
-✅ Organize files into folders
-✅ Rename and delete folders/files
-✅ Download files securely
+- User authentication with Passport.js
+- Upload files with Multer & Supabase Storage
+- Organize files into folders
+- Rename and delete folders/files
+- Download files securely
